@@ -9,6 +9,7 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.io.IOException;
 
@@ -21,6 +22,7 @@ import java.io.IOException;
 @RunWith(SpringRunner.class)
 @SpringBootTest
 @Slf4j
+@Transactional
 public class DepartmentMapperTests {
 
     @Autowired
@@ -36,6 +38,23 @@ public class DepartmentMapperTests {
 
         log.info(" ========= department: {} ========= ", department);
 
+        sqlSession.close();
+    }
+
+    @Test
+    public void insertDept() {
+
+        SqlSession sqlSession = sqlSessionFactory.openSession();
+
+        DepartmentMapper departmentMapper = sqlSession.getMapper(DepartmentMapper.class);
+
+        Department dept = new Department("Go服务端");
+
+        departmentMapper.insertDept(dept);
+
+        log.info(" =========== 此次生成主键id为：[{}] =========== ", dept.getId());
+
+        // 关闭sqlSession会话
         sqlSession.close();
     }
 

@@ -12,4 +12,5 @@ public interface DepartmentMapper {
 
     Department getDeptById(Integer id);
 
+    Integer insertDept(Department dept);
 }

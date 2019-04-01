@@ -21,4 +21,7 @@ public class Department {
     // 部门名称
     private String departmentName;
 
+    public Department(String departmentName) {
+        this.departmentName = departmentName;
+    }
 }
