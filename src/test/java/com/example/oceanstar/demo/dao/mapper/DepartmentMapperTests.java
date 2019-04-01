@@ -35,6 +35,8 @@ public class DepartmentMapperTests {
         Department department = departmentMapper.getDeptById(1);
 
         log.info(" ========= department: {} ========= ", department);
+
+        sqlSession.close();
     }
 
 }

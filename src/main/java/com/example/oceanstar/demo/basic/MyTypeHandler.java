@@ -9,7 +9,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 /**
- * @Description 配合Mybatis实现自定义类型处理器de2种方式：
+ * @Description 配合Mybatis实现自定义类型处理器的2种方式：
  * 1）implements TypeHandler
  * 2）extends BaseTypeHandler
  * @Author blake
