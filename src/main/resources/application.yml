@@ -15,13 +15,15 @@ mybatis:
   mapper-locations: classpath:mapper/*.xml
   type-aliases-package: com.example.oceanstar.demo.bean
   configuration:
-    use-generated-keys: true
-    map-underscore-to-camel-case: true
+    use-generated-keys: true # 开启主键生成
+    map-underscore-to-camel-case: true # 下划线命名规则转换至驼峰命名规则
+    lazy-loading-enabled: true # 开启延迟加载
+    aggressive-lazy-loading: true # 开启按需加载
 
 # Logger Configuration
 logging:
   level:
-    com.example.oceanstar.demo.dao.mapper : DEBUG
-    org.springframework.transaction.interceptor : TRACE
+    com.example.oceanstar.demo.dao.mapper: DEBUG # mybatis mapper 包路径的日志级别
+    org.springframework.transaction.interceptor: TRACE # 事务拦截器的日志级别
 
 

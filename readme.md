@@ -4,7 +4,8 @@
 * 2 动态sql功能测试用例
     * where set trim 标签的使用
     * foreach 标签的使用
-    * collection 标签的使用
+    * collection & association 标签的使用
+    
 * 3 mybatis一级缓存和二级缓存的使用示例
     * 一级缓存使用示例
     * 如何启停二级缓存
