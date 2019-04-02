@@ -10,6 +10,8 @@ import com.example.oceanstar.demo.bean.Employee;
  */
 public interface EmployeeMapper {
 
+    // @CacheNamespace
+    // @CacheNamespaceRef
     Employee getEmpById(Integer id);
 
     Employee getEmpDeptByIdUsingM1(Integer id);

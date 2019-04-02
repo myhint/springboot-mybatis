@@ -16,9 +16,10 @@ mybatis:
   type-aliases-package: com.example.oceanstar.demo.bean
   configuration:
     use-generated-keys: true # 开启主键生成
-    map-underscore-to-camel-case: true # 下划线命名规则转换至驼峰命名规则
+    map-underscore-to-camel-case: true # 数据表column下划线命名规则自动转换至驼峰命名规则
     lazy-loading-enabled: true # 开启延迟加载
     aggressive-lazy-loading: true # 开启按需加载
+    cache-enabled: true # 开启二级缓存
 
 # Logger Configuration
 logging:
