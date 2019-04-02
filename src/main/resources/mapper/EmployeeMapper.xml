@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.oceanstar.demo.dao.mapper.EmployeeMapper">
+
+    <select id="getEmpById" resultType="com.example.oceanstar.demo.bean.Employee">
+        select * from employee where id = #{id}
+    </select>
+
+    <select id="getEmpDeptByIdUsingM1" resultMap="getEmpByIdM1">
+        select * from employee where id = #{id}
+    </select>
+
+    <resultMap id="getEmpByIdM1" type="com.example.oceanstar.demo.bean.Employee">
+        <id property="id" column="id"/>
+        <result property="name" column="name"/>
+        <result property="email" column="email"/>
+        <result property="gender" column="gender"/>
+        <result property="dId" column="d_id"/>
+        <association property="dept" javaType="com.example.oceanstar.demo.bean.Department"
+                     select="com.example.oceanstar.demo.dao.mapper.DepartmentMapper.getDeptById"
+                     column="d_id"/>
+    </resultMap>
+
+    <select id="getEmpDeptByIdUsingM2" resultMap="getEmpByIdM2">
+        select * from employee e,department d where e.id = #{id} and e.d_id = d.id
+    </select>
+
+    <resultMap id="getEmpByIdM2" type="com.example.oceanstar.demo.bean.Employee">
+        <id property="id" column="id"/>
+        <result property="name" column="name"/>
+        <result property="email" column="email"/>
+        <result property="gender" column="gender"/>
+        <result property="dId" column="d_id"/>
+        <association property="dept" javaType="com.example.oceanstar.demo.bean.Department">
+            <id property="id" column="id"/>
+            <result property="departmentName" column="department_name"/>
+        </association>
+    </resultMap>
+
+</mapper>
