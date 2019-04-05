@@ -2,6 +2,8 @@ package com.example.oceanstar.demo.dao.mapper;
 
 import com.example.oceanstar.demo.bean.Employee;
 
+import java.util.List;
+
 /**
  * @Description employee mapper interface
  * @Author blake
@@ -17,4 +19,7 @@ public interface EmployeeMapper {
     Employee getEmpDeptByIdUsingM1(Integer id);
 
     Employee getEmpDeptByIdUsingM2(Integer id);
+
+    List<Employee> getEmpByDeptId(Integer deptId);
+
 }

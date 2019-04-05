@@ -58,4 +58,32 @@ public class DepartmentMapperTests {
         sqlSession.close();
     }
 
+    @Test
+    public void getDeptEmpByIdM1() {
+
+        SqlSession sqlSession = sqlSessionFactory.openSession();
+
+        DepartmentMapper departmentMapper = sqlSession.getMapper(DepartmentMapper.class);
+
+        Department deptEmp = departmentMapper.getDeptEmpByIdM1(1);
+
+        log.info(" =========== 查询出部门及员工信息：[{}] =========== ", deptEmp);
+
+        sqlSession.close();
+    }
+
+    @Test
+    public void getDeptEmpByIdM2() {
+
+        SqlSession sqlSession = sqlSessionFactory.openSession();
+
+        DepartmentMapper departmentMapper = sqlSession.getMapper(DepartmentMapper.class);
+
+        Department deptEmp = departmentMapper.getDeptEmpByIdM2(1);
+
+        log.info(" =========== 查询出部门及员工信息：[{}] =========== ", deptEmp);
+
+        sqlSession.close();
+    }
+
 }

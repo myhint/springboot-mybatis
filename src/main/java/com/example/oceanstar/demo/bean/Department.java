@@ -4,6 +4,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 
+import java.util.List;
+
 /**
  * @Description 部门信息
  * @Author blake
@@ -20,6 +22,9 @@ public class Department {
 
     // 部门名称
     private String departmentName;
+
+    // 当前部门员工信息
+    private List<Employee> employees;
 
     public Department(String departmentName) {
         this.departmentName = departmentName;

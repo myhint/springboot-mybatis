@@ -3,6 +3,7 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.example.oceanstar.demo.dao.mapper.DepartmentMapper">
+
     <!-- 使用自增主键，生成的主键id将自动封装进 keyProperty指定的Bean字段  -->
     <insert id="insertDept" useGeneratedKeys="true" keyProperty="id"
             parameterType="com.example.oceanstar.demo.bean.Department">
@@ -12,5 +13,35 @@
     <select id="getDeptById" resultType="com.example.oceanstar.demo.bean.Department">
         select * from department where id = #{id}
     </select>
+
+    <select id="getDeptEmpByIdM1" resultMap="getDeptEmpById1">
+        select d.id id,d.department_name department_name,
+        e.id e_id,e.name e_name,e.email e_email,e.gender e_gender,e.d_id e_d_id
+        from department d left join employee e on d.id = e.d_id where d.id = #{id}
+    </select>
+
+    <select id="getDeptEmpByIdM2" resultMap="getDeptEmpById2">
+        select * from department where id = #{id}
+    </select>
+
+    <resultMap id="getDeptEmpById1" type="com.example.oceanstar.demo.bean.Department">
+        <id property="id" column="id"/>
+        <result property="departmentName" column="department_name"/>
+        <collection property="employees" ofType="com.example.oceanstar.demo.bean.Employee" columnPrefix="e_">
+            <id property="id" column="id"/>
+            <result property="name" column="name"/>
+            <result property="email" column="email"/>
+            <result property="gender" column="gender"/>
+            <result property="dId" column="d_id"/>
+        </collection>
+    </resultMap>
+
+    <resultMap id="getDeptEmpById2" type="com.example.oceanstar.demo.bean.Department">
+        <id property="id" column="id"/>
+        <result property="departmentName" column="department_name"/>
+        <collection property="employees"
+                    select="com.example.oceanstar.demo.dao.mapper.EmployeeMapper.getEmpByDeptId"
+                    column="id"/>
+    </resultMap>
 
 </mapper>
