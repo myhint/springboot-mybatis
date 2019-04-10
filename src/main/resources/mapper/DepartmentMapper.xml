@@ -17,7 +17,7 @@
         </foreach>
     </insert>
 
-    <!-- 传入参数为Map，其key为字符串，value为一个list -->
+    <!-- 传入参数为Map，foreach标签的collection属性值为传入map的key，该key的value值为一个list -->
     <insert id="batchInsertDeptWithMap">
         insert into department (department_name) values
         <foreach collection="depts" item="item" index="index" separator=",">
@@ -40,6 +40,8 @@
            spring.datasource.url=jdbc:mysql://localhost:3306/mybatis?useUnicode=true&characterEncoding=utf-8&allowMultiQueries=true
       -->
 
+
+    <!-- 传入参数为Map，foreach标签的collection属性值为传入map的key，该key的value值为一个list -->
     <update id="batchUpdateDeptWithMap">
         <foreach collection="depts" item="item" index="index" separator=";">
             update department
@@ -80,7 +82,7 @@
           注意事项： <Collection collection="">  collection属性允许的value为 [collection, list] ，必须是这两个value值，否则将报错！
      -->
 
-    <!-- 传入参数为Map，其key为字符串，value为一个list -->
+    <!-- 传入参数为Map，foreach标签的collection属性值为传入map的key，该key的value值为一个list -->
     <select id="listDeptByIdsWithMap" resultType="com.example.oceanstar.demo.bean.Department">
         select * from department where id in
         <foreach collection="deptIds" item="item" index="index" open="(" separator="," close=")">

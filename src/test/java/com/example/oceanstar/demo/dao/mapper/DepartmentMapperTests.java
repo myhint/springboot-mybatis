@@ -20,7 +20,8 @@ import java.util.Map;
 
 /**
  * @Description mybatis操作部门department数据表
- * =====> <collection><collection/>标签的使用
+ * =====> 1.<collection><collection/>标签的使用
+ * =====> 2.<foreach><foreach/>标签的使用
  * @Author blake
  * @Date 2019-03-17 11:31
  * @Version 1.0
