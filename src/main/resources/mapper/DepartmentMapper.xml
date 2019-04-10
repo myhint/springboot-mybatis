@@ -10,6 +10,51 @@
         insert into department (department_name) values (#{departmentName})
     </insert>
 
+    <insert id="batchInsertDept" useGeneratedKeys="true" keyProperty="id">
+        insert into department (department_name) values
+        <foreach collection="list" item="item" index="index" separator=",">
+            (#{item.departmentName})
+        </foreach>
+    </insert>
+
+    <!-- 传入参数为Map，其key为字符串，value为一个list -->
+    <insert id="batchInsertDeptWithMap">
+        insert into department (department_name) values
+        <foreach collection="depts" item="item" index="index" separator=",">
+            (#{item.departmentName})
+        </foreach>
+    </insert>
+
+    <update id="batchUpdateDept">
+        <foreach collection="list" item="item" index="index" separator=";">
+            update department
+            <set>
+                department_name=#{item.departmentName}
+            </set>
+            <where>
+                id=#{item.id}
+            </where>
+        </foreach>
+    </update>
+    <!--  注意事项：update配合foreach使用，必须完善数据库连接配置：在原有基础上追加配置项 allowMultiQueries=true，详细配置如下：
+           spring.datasource.url=jdbc:mysql://localhost:3306/mybatis?useUnicode=true&characterEncoding=utf-8&allowMultiQueries=true
+      -->
+
+    <update id="batchUpdateDeptWithMap">
+        <foreach collection="depts" item="item" index="index" separator=";">
+            update department
+            <set>
+                department_name=#{item.departmentName}
+            </set>
+            <where>
+                id=#{item.id}
+            </where>
+        </foreach>
+    </update>
+    <!--  注意事项：update配合foreach使用，必须完善数据库连接配置：在原有基础上追加配置项 allowMultiQueries=true，详细配置如下：
+          spring.datasource.url=jdbc:mysql://localhost:3306/mybatis?useUnicode=true&characterEncoding=utf-8&allowMultiQueries=true
+     -->
+
     <select id="getDeptById" resultType="com.example.oceanstar.demo.bean.Department">
         select * from department where id = #{id}
     </select>
@@ -22,6 +67,25 @@
 
     <select id="getDeptEmpByIdM2" resultMap="getDeptEmpById2">
         select * from department where id = #{id}
+    </select>
+
+    <select id="listDeptByIds" resultType="com.example.oceanstar.demo.bean.Department">
+        select * from department where id in
+        <foreach collection="list" item="item" index="index" open="(" separator="," close=")">
+            <!--        <foreach collection="collection" item="item" index="index" open="(" separator="," close=")">-->
+            #{item}
+        </foreach>
+    </select>
+    <!--  Caused by: org.apache.ibatis.binding.BindingException: Parameter 'ids' not found. Available parameters are [collection, list]
+          注意事项： <Collection collection="">  collection属性允许的value为 [collection, list] ，必须是这两个value值，否则将报错！
+     -->
+
+    <!-- 传入参数为Map，其key为字符串，value为一个list -->
+    <select id="listDeptByIdsWithMap" resultType="com.example.oceanstar.demo.bean.Department">
+        select * from department where id in
+        <foreach collection="deptIds" item="item" index="index" open="(" separator="," close=")">
+            #{item}
+        </foreach>
     </select>
 
     <resultMap id="getDeptEmpById1" type="com.example.oceanstar.demo.bean.Department">

@@ -1,6 +1,7 @@
 package com.example.oceanstar.demo.dao.mapper;
 
 import com.example.oceanstar.demo.bean.Department;
+import com.example.oceanstar.demo.utils.collection.CollectionUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
@@ -11,10 +12,15 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * @Description mybatis操作部门department数据表
+ * =====> <collection><collection/>标签的使用
  * @Author blake
  * @Date 2019-03-17 11:31
  * @Version 1.0
@@ -29,7 +35,7 @@ public class DepartmentMapperTests {
     private SqlSessionFactory sqlSessionFactory;
 
     @Test
-    public void getDeptById() throws IOException {
+    public void getDeptById() {
 
         SqlSession sqlSession = sqlSessionFactory.openSession();
         DepartmentMapper departmentMapper = sqlSession.getMapper(DepartmentMapper.class);
@@ -86,4 +92,138 @@ public class DepartmentMapperTests {
         sqlSession.close();
     }
 
+    // foreach： where in (...) and parameter type is list
+    @Test
+    public void listDeptByIds() {
+
+        SqlSession sqlSession = sqlSessionFactory.openSession();
+
+        DepartmentMapper departmentMapper = sqlSession.getMapper(DepartmentMapper.class);
+
+        List<Department> departments = departmentMapper.listDeptByIds(Arrays.asList(1, 2));
+
+        if (CollectionUtil.isNotEmpty(departments)) {
+            departments.forEach(item -> log.info(" ========= 部门：[{}] ========= ", item));
+        }
+
+        sqlSession.close();
+    }
+
+    // foreach： where in (...) and parameter type is map
+    @Test
+    public void listDeptByIdsWithMap() {
+
+        SqlSession sqlSession = sqlSessionFactory.openSession();
+
+        DepartmentMapper departmentMapper = sqlSession.getMapper(DepartmentMapper.class);
+
+        Map<String, List<Integer>> deptIdMap = new HashMap<>();
+        deptIdMap.put("deptIds", Arrays.asList(1, 2));
+
+        List<Department> departments = departmentMapper.listDeptByIdsWithMap(deptIdMap);
+
+        if (CollectionUtil.isNotEmpty(departments)) {
+            departments.forEach(item -> log.info(" ========= 部门：[{}] ========= ", item));
+        }
+
+        sqlSession.close();
+    }
+
+    // foreach: batch insert with list|set
+    @Test
+    public void batchInsertDept() {
+
+        SqlSession sqlSession = sqlSessionFactory.openSession();
+
+        DepartmentMapper departmentMapper = sqlSession.getMapper(DepartmentMapper.class);
+
+        Department dept1 = new Department("Dept01");
+        Department dept2 = new Department("Dept02");
+
+        List<Department> depts = new ArrayList<>();
+        depts.add(dept1);
+        depts.add(dept2);
+
+        departmentMapper.batchInsertDept(depts);
+
+        sqlSession.close();
+    }
+
+    // foreach: batch insert with map
+    @Test
+    public void batchInsertDeptWithMap() {
+
+        SqlSession sqlSession = sqlSessionFactory.openSession();
+
+        DepartmentMapper departmentMapper = sqlSession.getMapper(DepartmentMapper.class);
+
+        Department dept1 = new Department("Dept01");
+        Department dept2 = new Department("Dept02");
+
+        List<Department> depts = new ArrayList<>();
+        depts.add(dept1);
+        depts.add(dept2);
+
+        Map<String, List<Department>> deptMap = new HashMap<>();
+        deptMap.put("depts", depts);
+
+        departmentMapper.batchInsertDeptWithMap(deptMap);
+
+        sqlSession.close();
+    }
+
+    // foreach: batch update with list|set
+    @Test
+    public void batchUpdateDept() {
+
+        SqlSession sqlSession = sqlSessionFactory.openSession();
+
+        DepartmentMapper departmentMapper = sqlSession.getMapper(DepartmentMapper.class);
+
+        Department dept1 = new Department(1, "Dept01");
+        Department dept2 = new Department(2, "Dept02");
+
+        List<Department> depts = new ArrayList<>();
+        depts.add(dept1);
+        depts.add(dept2);
+
+        departmentMapper.batchUpdateDept(depts);
+
+        List<Department> departments = departmentMapper.listDeptByIds(Arrays.asList(1, 2));
+
+        if (CollectionUtil.isNotEmpty(departments)) {
+            departments.forEach(item -> log.info(" ======== 部门：[{}] ======== ", item));
+        }
+
+        sqlSession.close();
+    }
+
+    // foreach: batch update with list|set
+    @Test
+    public void batchUpdateDeptWithMap() {
+
+        SqlSession sqlSession = sqlSessionFactory.openSession();
+
+        DepartmentMapper departmentMapper = sqlSession.getMapper(DepartmentMapper.class);
+
+        Department dept1 = new Department(1, "Dept01");
+        Department dept2 = new Department(2, "Dept02");
+
+        List<Department> depts = new ArrayList<>();
+        depts.add(dept1);
+        depts.add(dept2);
+
+        Map<String, List<Department>> deptMap = new HashMap<>();
+        deptMap.put("depts", depts);
+
+        departmentMapper.batchUpdateDeptWithMap(deptMap);
+
+        List<Department> departments = departmentMapper.listDeptByIds(Arrays.asList(1, 2));
+
+        if (CollectionUtil.isNotEmpty(departments)) {
+            departments.forEach(item -> log.info(" ======== 部门：[{}] ======== ", item));
+        }
+
+        sqlSession.close();
+    }
 }

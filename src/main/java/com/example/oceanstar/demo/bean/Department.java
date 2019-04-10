@@ -29,4 +29,9 @@ public class Department {
     public Department(String departmentName) {
         this.departmentName = departmentName;
     }
+
+    public Department(Integer id, String departmentName) {
+        this.id = id;
+        this.departmentName = departmentName;
+    }
 }
