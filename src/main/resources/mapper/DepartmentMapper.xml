@@ -17,7 +17,7 @@
         </foreach>
     </insert>
 
-    <!-- 传入参数为Map，foreach标签的collection属性值为传入map的key，该key的value值为一个list -->
+    <!-- 传入参数为Map，foreach标签的collection属性值为传入map的key，该key的value值为一个list; index属性值为map的key -->
     <insert id="batchInsertDeptWithMap">
         insert into department (department_name) values
         <foreach collection="depts" item="item" index="index" separator=",">
@@ -41,7 +41,7 @@
       -->
 
 
-    <!-- 传入参数为Map，foreach标签的collection属性值为传入map的key，该key的value值为一个list -->
+    <!-- 传入参数为Map，foreach标签的collection属性值为传入map的key，该key的value值为一个list; index属性值为map的key -->
     <update id="batchUpdateDeptWithMap">
         <foreach collection="depts" item="item" index="index" separator=";">
             update department
@@ -82,7 +82,7 @@
           注意事项： <Collection collection="">  collection属性允许的value为 [collection, list] ，必须是这两个value值，否则将报错！
      -->
 
-    <!-- 传入参数为Map，foreach标签的collection属性值为传入map的key，该key的value值为一个list -->
+    <!-- 传入参数为Map，foreach标签的collection属性值为传入map的key，该key的value值为一个list; index属性值为map的key -->
     <select id="listDeptByIdsWithMap" resultType="com.example.oceanstar.demo.bean.Department">
         select * from department where id in
         <foreach collection="deptIds" item="item" index="index" open="(" separator="," close=")">
